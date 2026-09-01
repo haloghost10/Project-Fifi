@@ -1,0 +1,39 @@
+{
+  "expo": {
+    "name": "FitPal",
+    "slug": "fitpal",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#F5F6F2"
+    },
+    "assetBundlePatterns": ["**/*"],
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.yourname.fitpal",
+      "infoPlist": {
+        "NSCameraUsageDescription": "FitPal uses your camera to identify food and scan barcodes.",
+        "NSPhotoLibraryUsageDescription": "FitPal lets you attach a photo of your meal."
+      }
+    },
+    "android": {
+      "package": "com.yourname.fitpal",
+      "permissions": ["CAMERA"],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#F5F6F2"
+      }
+    },
+    "plugins": [
+      ["expo-camera", { "cameraPermission": "Allow FitPal to access your camera to identify food." }],
+      "expo-barcode-scanner"
+    ],
+    "extra": {
+      "eas": { "projectId": "REPLACE_WITH_YOUR_EAS_PROJECT_ID" }
+    }
+  }
+}
