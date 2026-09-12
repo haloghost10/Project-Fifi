@@ -54,10 +54,15 @@ export function OnboardingScreen() {
     const targets = calculateGoalTargets(profile);
 
     try {
+      // RootNavigator only shows this screen once a session is confirmed, so
+      // this should always succeed — but we still guard against a race.
       const { data: userData } = await supabase.auth.getUser();
-      if (userData?.user) {
-        profile.id = userData.user.id;
-        await supabase.from("user_profiles").upsert({
+      if (!userData?.user) {
+        Alert.alert("Session issue", "Please sign out and sign in again.");
+        return;
+      }
+      profile.id = userData.user.id;
+      await supabase.from("user_profiles").upsert({
           id: profile.id,
           name: profile.name,
           age: profile.age,
@@ -82,7 +87,6 @@ export function OnboardingScreen() {
           was_adjusted_for_safety: targets.wasAdjustedForSafety,
           safety_note: targets.safetyNote,
         });
-      }
     } catch (err) {
       // Non-fatal: local state still works, Supabase sync can retry later.
       console.warn("Could not sync profile to Supabase (are your .env keys set?):", err);

@@ -40,7 +40,7 @@ export function CalorieSummaryCard({ consumed, target }: Props) {
             origin={`${size / 2}, ${size / 2}`}
           />
         </Svg>
-        <View style={[StyleSheet.absoluteFillObject, styles.center]}>
+        <View style={[StyleSheet.absoluteFill, styles.center]}>
           <Text style={styles.bigNumber}>{Math.abs(Math.round(remaining))}</Text>
           <Text style={styles.subLabel}>{over ? "kcal over" : "kcal left"}</Text>
         </View>

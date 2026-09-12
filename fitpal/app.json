@@ -4,13 +4,7 @@
     "slug": "fitpal",
     "version": "0.1.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#F5F6F2"
-    },
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": false,
@@ -22,15 +16,10 @@
     },
     "android": {
       "package": "com.yourname.fitpal",
-      "permissions": ["CAMERA"],
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#F5F6F2"
-      }
+      "permissions": ["CAMERA"]
     },
     "plugins": [
-      ["expo-camera", { "cameraPermission": "Allow FitPal to access your camera to identify food." }],
-      "expo-barcode-scanner"
+      ["expo-camera", { "cameraPermission": "Allow FitPal to access your camera to identify food." }]
     ]
   }
 }

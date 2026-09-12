@@ -133,7 +133,7 @@ export function ScanScreen() {
         <Text style={styles.title}>{estimate.name}</Text>
         <Text style={styles.serving}>{estimate.servingDescription}</Text>
 
-        <View style={styles.confidenceBadge(estimate.confidence)}>
+        <View style={getConfidenceBadgeStyle(estimate.confidence)}>
           <Text style={styles.confidenceText}>Confidence: {estimate.confidence}</Text>
         </View>
 
@@ -211,6 +211,17 @@ function Fact({ label, value }: { label: string; value: string }) {
   );
 }
 
+function getConfidenceBadgeStyle(level: "high" | "medium" | "low") {
+  return {
+    alignSelf: "flex-start" as const,
+    backgroundColor: level === "high" ? colors.brand : level === "medium" ? colors.carbs : colors.warning,
+    borderRadius: 999,
+    paddingHorizontal: spacing(3),
+    paddingVertical: spacing(1),
+    marginBottom: spacing(4),
+  };
+}
+
 const styles = StyleSheet.create({
   screen: { flex: 1, backgroundColor: colors.base, padding: spacing(5), paddingTop: spacing(16) },
   content: { padding: spacing(5), paddingTop: spacing(16), paddingBottom: spacing(24) },
@@ -226,14 +237,6 @@ const styles = StyleSheet.create({
   primaryBtnText: { fontFamily: fonts.bodyBold, fontSize: 15, color: "#FFFFFF" },
   disabled: { opacity: 0.4 },
   shutter: { position: "absolute", bottom: 40, alignSelf: "center", backgroundColor: colors.brand, paddingHorizontal: spacing(8), paddingVertical: spacing(3), borderRadius: 999 },
-  confidenceBadge: (level: "high" | "medium" | "low") => ({
-    alignSelf: "flex-start" as const,
-    backgroundColor: level === "high" ? colors.brand : level === "medium" ? colors.carbs : colors.warning,
-    borderRadius: 999,
-    paddingHorizontal: spacing(3),
-    paddingVertical: spacing(1),
-    marginBottom: spacing(4),
-  }),
   confidenceText: { fontFamily: fonts.bodyMedium, fontSize: 12, color: "#FFFFFF" },
   factsGrid: { flexDirection: "row", flexWrap: "wrap", gap: spacing(4), marginBottom: spacing(4) },
   factCell: { width: "45%" },
