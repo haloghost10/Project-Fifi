@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 import { colors, type as fonts, spacing } from "@/theme";
 import { useAppStore } from "@/store/useAppStore";
@@ -10,7 +10,25 @@ const MEALS = ["breakfast", "lunch", "dinner", "snack"] as const;
 export function HomeScreen() {
   const goalTargets = useAppStore((s) => s.goalTargets);
   const entries = useAppStore((s) => s.todayEntries);
-  const totals = useAppStore((s) => s.todayTotals());
+
+  // Computed with useMemo from the raw entries array (a stable reference unless
+  // entries actually changes) rather than calling a store method that builds a
+  // new object on every call — that pattern breaks Zustand/React's snapshot
+  // equality check and causes an infinite render loop.
+  const totals = useMemo(
+    () =>
+      entries.reduce(
+        (acc, e) => ({
+          calories: acc.calories + e.facts.calories,
+          proteinG: acc.proteinG + e.facts.proteinG,
+          carbsG: acc.carbsG + e.facts.carbsG,
+          fatG: acc.fatG + e.facts.fatG,
+          fiberG: acc.fiberG + (e.facts.fiberG ?? 0),
+        }),
+        { calories: 0, proteinG: 0, carbsG: 0, fatG: 0, fiberG: 0 }
+      ),
+    [entries]
+  );
 
   if (!goalTargets) return null;
 

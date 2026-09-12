@@ -15,11 +15,9 @@ interface AppState {
   setTodayEntries: (entries: DiaryEntry[]) => void;
   addTodayEntry: (entry: DiaryEntry) => void;
   removeTodayEntry: (entryId: string) => void;
-
-  todayTotals: () => { calories: number; proteinG: number; carbsG: number; fatG: number; fiberG: number };
 }
 
-export const useAppStore = create<AppState>((set, get) => ({
+export const useAppStore = create<AppState>((set) => ({
   profile: null,
   goalTargets: null,
   todayEntries: [],
@@ -30,18 +28,4 @@ export const useAppStore = create<AppState>((set, get) => ({
   addTodayEntry: (entry) => set((s) => ({ todayEntries: [...s.todayEntries, entry] })),
   removeTodayEntry: (entryId) =>
     set((s) => ({ todayEntries: s.todayEntries.filter((e) => e.id !== entryId) })),
-
-  todayTotals: () => {
-    const entries = get().todayEntries;
-    return entries.reduce(
-      (acc, e) => ({
-        calories: acc.calories + e.facts.calories,
-        proteinG: acc.proteinG + e.facts.proteinG,
-        carbsG: acc.carbsG + e.facts.carbsG,
-        fatG: acc.fatG + e.facts.fatG,
-        fiberG: acc.fiberG + (e.facts.fiberG ?? 0),
-      }),
-      { calories: 0, proteinG: 0, carbsG: 0, fatG: 0, fiberG: 0 }
-    );
-  },
 }));
