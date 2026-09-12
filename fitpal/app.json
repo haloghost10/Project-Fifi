@@ -31,9 +31,6 @@
     "plugins": [
       ["expo-camera", { "cameraPermission": "Allow FitPal to access your camera to identify food." }],
       "expo-barcode-scanner"
-    ],
-    "extra": {
-      "eas": { "projectId": "REPLACE_WITH_YOUR_EAS_PROJECT_ID" }
-    }
+    ]
   }
 }
